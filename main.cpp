@@ -1,5 +1,6 @@
 #include "class.h"
 #include <iostream>
+#include <stdexcept>
 
 int main(){
     Dinamic_arr a(3);
@@ -8,7 +9,7 @@ int main(){
     a.setter(1,20);
     a.setter(2,30);
 
-    std::cout<<"Array a:";
+    std::cout<<"Array a: ";
     a.show();
     std::cout<<"\n";
 
@@ -38,6 +39,30 @@ int main(){
     std::cout << "After minus: ";
     a.show();
     std::cout << "\n";
+    
+    //out_of_range
+    try{
+        std::cout<<a.getter(10);
+    }
+    catch( const std::out_of_range& error){
+        std::cout<<"out_of_range: "<<error.what()<<std::endl;
+    }
+
+    //invalid_argument
+    try{
+        a.setter(0,500);
+    }
+    catch( const std::invalid_argument& error){
+        std::cout<<"invalid_argument: "<<error.what()<<std::endl;
+    }
+
+    //bad_alloc
+    try{
+        throw std::bad_alloc();
+    }
+    catch (const std::bad_alloc& error){
+        std::cout<<"bad_aloc: "<<error.what(); 
+    }
 
     return 0;
 
