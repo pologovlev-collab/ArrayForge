@@ -25,19 +25,23 @@ int Dinamic_arr::getter(int index) {
     if (index >= 0 && index < size) {
         return pointer_to_data[index];
     }
-
-    std::cout << "Ошибка getter: индекс выходит за границы массива!\n";
-    return 0;
+    else {
+        throw std::out_of_range(
+            "Ошибка getter: индекс выходит за границы массива!"
+        );
+    }
 }
-void Dinamic_arr::setter(int index, int num){
-    if (index < 0 || index >= size){
-        std::cout << "Index is out of range\n";
-        return;
+void Dinamic_arr::setter(int index, int num) {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range(
+            "Ошибка setter: индекс выходит за границы массива!"
+        );
     }
 
-    if (num < MIN || num > MAX){
-        std::cout << "Number must be from -100 to 100\n";
-        return;
+    if (num < MIN || num > MAX) {
+        throw std::invalid_argument(
+            "Ошибка setter: число должно быть от -100 до 100!"
+        );
     }
 
     pointer_to_data[index] = num;
