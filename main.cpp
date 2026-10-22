@@ -65,7 +65,7 @@ int main(){
         throw std::bad_alloc();
     }
     catch (const std::bad_alloc& error){
-        std::cerr<<"bad_aloc: "<<error.what(); 
+        std::cerr<<"bad_aloc: "<<error.what()<<std::endl; 
     }
 
     //стрики
@@ -75,7 +75,45 @@ int main(){
     words.setter(1,"C++");
 
     words.push_back("Temp");
-    std::cout<<"Words :"<<words<<"\n";
+    std::cout<<"Words :"<<words<<std::endl;
+
+    // operator[]
+    Dinamic_arr<int> test(3);
+
+    test[0] = 10;
+    test[1] = 20;
+    test[2] = 30;
+
+    // Проверка присваивания через Proxy
+    test[0] = test[1];
+
+    // operator== и !=
+    Dinamic_arr<int> other(test);
+
+    std::cout << std::boolalpha;
+    std::cout << (test == other) << std::endl;
+
+    other[0] = 10;
+    std::cout << (test != other) << std::endl;
+
+    // Арифметика
+    test += 5;
+    test -= 5;
+
+    test += other;
+    test -= other;
+
+    // итератор
+    for (auto& element : test) {
+        element = 7;
+    }
+
+    // Константный итератор
+    const Dinamic_arr<int>& readonly = test;
+
+    for (const auto& element : readonly) {
+        std::cout << element << " ";
+    }
 
     // расстояние между строками
     try {
@@ -84,7 +122,7 @@ int main(){
         std::cout << words.distance(other);
     }
     catch (const std::bad_typeid& error) {
-        std::cerr << "bad_typeid: "<< error.what() << "\n";
+        std::cerr << "bad_typeid: "<< error.what() << std::endl;
     }
 
 
@@ -93,9 +131,21 @@ int main(){
         std::cerr << x.distance(a);
     }
     catch (const std::invalid_argument& error) {
-        std::cerr << "Different sizes: "<< error.what() << "\n";
+        std::cerr << "Different sizes: "<< error.what() << std::endl;
+    }
+    try {
+    test[0] = 500;
+    }catch (const std::invalid_argument& error) {
+        std::cout << "operator[] error: "<< error.what() << std::endl;
     }
 
+    try {
+        for (auto& element : test) {
+            element = 500;
+        }
+    }catch (const std::invalid_argument& error) {
+        std::cout << "Iterator error: "<< error.what() << std::endl;
+    }
     return 0;
 
 }
