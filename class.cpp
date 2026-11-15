@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <typeinfo>
 #include <cmath>
+#include <utility>
 
 
 //конструктор
@@ -17,6 +18,49 @@ Dinamic_arr<T>::Dinamic_arr(int rec_size):pointer_to_data(nullptr),size(0),capac
     capacity_=rec_size;
     size=rec_size;
 };
+//Оператор =
+
+template <typename T>
+Dinamic_arr<T>& Dinamic_arr<T>::operator=(const Dinamic_arr& other){
+    if (this==&other)return *this;
+
+    Dinamic_arr temp(other);
+    *this=std::move(temp);
+
+    return *this;
+}
+
+//Move конструктор
+
+template<typename T>
+Dinamic_arr<T>::Dinamic_arr(Dinamic_arr&& other)noexcept
+    :pointer_to_data(other.pointer_to_data),
+    size(other.size),
+    capacity_(other.capacity_){
+        other.pointer_to_data=nullptr;
+        other.size=0;
+        other.capacity_=0;
+    }
+
+//Move оператор присваивания
+
+template <typename T>
+Dinamic_arr<T>& Dinamic_arr<T>::operator=(Dinamic_arr&& other) noexcept {
+    if (this == &other) return *this;
+
+    delete[] pointer_to_data;
+
+    pointer_to_data = other.pointer_to_data;
+    size = other.size;
+    capacity_ = other.capacity_;
+
+    other.pointer_to_data = nullptr;
+    other.size = 0;
+    other.capacity_ = 0;
+
+    return *this;
+}
+ 
 
 //Доп выделение
 template <typename T>

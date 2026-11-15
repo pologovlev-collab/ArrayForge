@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 
+
 int main(){
     Dinamic_arr<int> a(3);
     Dinamic_arr<int> x(5);
@@ -125,6 +126,29 @@ int main(){
         std::cerr << "bad_typeid: "<< error.what() << std::endl;
     }
 
+    Dinamic_arr<int> a5(2);
+    a5[0] = 10;
+    a5[1] = 20;
+
+    Dinamic_arr<int> b5(1);
+    b5 = a5;
+
+    b5[0] = 50;
+
+    std::cout << "Original: " << a5 << "\n";
+    std::cout << "Copy: " << b5 << "\n";
+
+    // Move-конструктор
+    Dinamic_arr<int> moved(std::move(a5));
+
+    std::cout << "Moved: " << moved << "\n";
+    std::cout << "Old size: " << a5.get_size() << "\n";
+
+    // Move-присваивание
+    Dinamic_arr<int> receiver(1);
+    receiver = std::move(moved);
+
+    std::cout << "Receiver: " << receiver << "\n";
 
     // Ошибка: разные размеры массивов
     try {
