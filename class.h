@@ -21,7 +21,13 @@ class Dinamic_arr{
         int get_size() const;
         int capacity() const;
         void reserve(int new_capacity);
+
         Dinamic_arr(const Dinamic_arr& array_copy);
+        Dinamic_arr& operator=(const Dinamic_arr& oth);
+
+        Dinamic_arr(Dinamic_arr&& oth)noexcept;
+        Dinamic_arr& operator=(Dinamic_arr&&oth)noexcept;
+
         explicit Dinamic_arr(int size);
         ~Dinamic_arr();
 
